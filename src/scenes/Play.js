@@ -142,7 +142,9 @@ class Play extends Phaser.Scene {
             //character
             this.character.update();
             //jellyfish
-            this.jellyfish.update();
+            this.jellyfish01.update();
+            this.jellyfish02.update();
+            this.jellyfish03.update();
         }
     }
 
