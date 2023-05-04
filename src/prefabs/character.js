@@ -15,12 +15,7 @@ class Character extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        if(keyRIGHT.isDown){
-            this.x += this.moveSpeed; 
-            this.swim.x = this.x;
-            this.swim.y = this.y; 
-            this.swim.on('animationcomplete', () => {this.swim.anims.play('Swim')});
-        }
+        
         if(keyUP.isDown){
             this.y -= this.moveSpeed; 
             this.swim.x = this.x;
@@ -34,6 +29,8 @@ class Character extends Phaser.GameObjects.Sprite {
             this.swim.y = this.y; 
             this.swim.on('animationcomplete', () => {this.swim.anims.play('Swim')});
         
+        } else {
+            this.swim.on('animationcomplete', () => {this.swim.anims.play('Swim')});
         }
     }
 

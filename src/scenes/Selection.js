@@ -34,7 +34,7 @@ class Selection extends Phaser.Scene {
         }
         //instructions
         this.add.text(game.config.width/2, game.config.height/5 - borderUISize - borderPadding, "Select the avatar you want to use.", menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/3 - borderUISize - borderPadding, "Use the < and > arrows to select.", menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/3 - borderUISize - borderPadding, "Use the <- and -> arrows to select.", menuConfig).setOrigin(0.5);
         
         this.shark = this.add.image(game.config.width/5, game.config.height/2, 'shark').setOrigin(0.5, 0);
         this.shark.setDisplaySize(200,100);
