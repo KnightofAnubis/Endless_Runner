@@ -10,7 +10,7 @@ class Character extends Phaser.GameObjects.Sprite {
             
             
             this.moveSpeed = 1;
-            
+             
             
     }
 

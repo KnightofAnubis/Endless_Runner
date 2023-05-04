@@ -33,7 +33,9 @@ class Play extends Phaser.Scene {
         this.anims.createFromAseprite('jellyfish');
 
 
-        this.jellyfish = new Jellyfish(this, 0, Phaser.Math.Between(0, this.game.config.height), 'jellyfish');
+        this.jellyfish01 = new Jellyfish(this, 0, Phaser.Math.Between(0, this.game.config.height), 'jellyfish');
+        this.jellyfish02 = new Jellyfish(this, 0, Phaser.Math.Between(0, this.game.config.height), 'jellyfish');
+        this.jellyfish03 = new Jellyfish(this, 0, Phaser.Math.Between(0, this.game.config.height), 'jellyfish');
 
         //add character
         this.character = new Character(this, game.config.width/4, game.config.height/2, this.selectedCharacter).setOrigin(0.5, 0);
