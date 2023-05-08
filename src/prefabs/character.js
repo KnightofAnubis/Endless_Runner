@@ -2,10 +2,12 @@ class Character extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
             this.frameName = texture;
-
+            this.parentScene = scene;
             //add object to existing scene
             //scene.add.existing(this);
-            this.swim = this.scene.add.sprite(this.x, this.y, this.character).setOrigin(0,0);
+            this.swim = this.parentScene.add.sprite(this.x, this.y, this.character).setOrigin(0.5);
+            this.parentScene.physics.add.existing(this);    // add to physics system
+            this.swim.destroyed = false;  
             this.swim.play('Swim');
             
             
@@ -32,9 +34,11 @@ class Character extends Phaser.GameObjects.Sprite {
         } else {
             this.swim.on('animationcomplete', () => {this.swim.anims.play('Swim')});
         }
+        
     }
 
     reset() {
         //what happens when the player dies?
+        this.swim.destroy = true;
     }
 }

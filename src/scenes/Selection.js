@@ -4,19 +4,7 @@ class Selection extends Phaser.Scene {
     constructor() {
         super('selectionScene');
     }
-    preload() {
-        //maybe stuff?
-        this.load.aseprite(
-            'shark',
-            `assets/shark.png`,
-            `assets/shark.json`
-        )
-       this.load.aseprite(
-            'manta',
-            `assets/manta.png`,
-            `assets/manta.json`
-        )
-    }
+   
 
     create() {
         //selection

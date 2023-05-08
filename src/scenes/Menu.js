@@ -3,10 +3,6 @@ class Menu extends Phaser.Scene {
         super('menuScene');
     }
 
-    preload() {
-        //loading some sounds... cause it takes time
-        this.load.audio('background_music', 'assets/ocean.wav');
-    }
 
     create() {
         //creating stoof
