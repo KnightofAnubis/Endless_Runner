@@ -35,6 +35,10 @@ class Load extends Phaser.Scene {
             'jellyfish.json'
         );
         this.load.image('rock', 'rock.png');
+        this.load.image('trash', 'trash.png');
+        this.load.image('fish', 'fish.png');
+
+        
         
         // load audio assets
         this.load.audio('background_music', 'ocean.wav');

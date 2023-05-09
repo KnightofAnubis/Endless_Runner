@@ -24,13 +24,45 @@ class Play extends Phaser.Scene {
         level = 0;
         this.jellySpeed = -450;
         this.jellySpeedMax = -1000;
+        this.fishSpeed = -450;
+        this.fishSpeedMax = -800;
+        this.trashSpeed = -450;
+        this.trashSpeedMax = -700;
+        
 
         this.physics.world.setBounds(0, 0, 640, 480);
         //creating some stuff
         this.backdrop = this.add.tileSprite(0, 0,640, 480, 'backdrop').setOrigin(0,0);
        
+        //need array of different phrases to cycle through
+        this.hints = ["Don't hit the jelly fish!", "Collect fish for points!", "Don't get caught up in the trash!", "Avoid boats!", "Don't bump into the rocks!"];
+        menuConfig.fontSize = 20;
+        //text
+        this.hintText = this.add.text(game.config.width/2, game.config.height/5 - borderUISize - borderPadding, "Use the up and down arrows to move.", menuConfig).setOrigin(0.5);
+        //need array of different phrases to cycle through
         
-         //animation
+        this.time.delayedCall(5000, () => {
+            this.displayHint = this.hints[0];
+            this.hintText.setText(this.displayHint); 
+        });
+        this.time.delayedCall(35000, () => { 
+            this.displayHint = this.hints[1];
+            this.hintText.setText(this.displayHint); 
+        });
+        this.time.delayedCall(55000, () => {
+            this.displayHint = this.hints[2];
+            this.hintText.setText(this.displayHint); 
+        });
+        this.time.delayedCall(70000, () => {
+            this.displayHint = this.hints[3];
+            this.hintText.setText(this.displayHint); 
+        });
+        this.time.delayedCall(105000, () => {
+            this.displayHint = this.hints[4];
+            this.hintText.setText(this.displayHint); 
+        });
+           
+        //animation
        
         this.anims.createFromAseprite(this.selectedCharacter);
         this.anims.createFromAseprite('jellyfish');
@@ -44,6 +76,22 @@ class Play extends Phaser.Scene {
             this.addJelly(); 
         });
         
+        //fishes
+        this.fishGroup = this.add.group({
+            runChildUpdate: true
+        });
+        this.time.delayedCall(2500, () => {
+            this.addFish();
+        });
+
+        //trash
+        this.trashGroup = this.add.group({
+            runChildUpdate: true
+        });
+        this.time.delayedCall(4500, () => {
+            this.addTrash();
+        });
+        
         //add character
         this.character = new Character(this, game.config.width/4, game.config.height/2, this.selectedCharacter).setOrigin(0.5, 0);
         this.character.body.setSize(60,30);
@@ -52,7 +100,7 @@ class Play extends Phaser.Scene {
         this.character.body.setCollideWorldBounds(true);
         
          // set up rock group
-         this.rockGroup = this.add.group({
+        this.rockGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
         // wait a few seconds before spawning barriers
@@ -70,7 +118,7 @@ class Play extends Phaser.Scene {
 
         
         //some keys
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -85,7 +133,7 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            fixedWidth: 80
         }
     
         //new initialize score
@@ -131,7 +179,9 @@ class Play extends Phaser.Scene {
             });
         }
         
-        this.hintAdvice();
+        
+        //end condition
+        this.collided = false;
         
         
     }
@@ -141,86 +191,98 @@ class Play extends Phaser.Scene {
         let rock = new Rock(this, this.rockSpeed - speedVariance);
         this.rockGroup.add(rock);
     }
-    // create new rock and add them to existing barrier group
+    // create new jelly and add them to existing jelly group: I really like this method!
     addJelly() {
         let speedVariance =  Phaser.Math.Between(0, 50);
-        let jelly = new Jellyfish(this, this.jellySpeed - speedVariance).setRandomPosition(680, 0 ,0, 300);
+        let jelly = new Jellyfish(this, this.jellySpeed - speedVariance).setRandomPosition(680, 0 ,0, 400);
         this.jellyGroup.add(jelly);
+    }
+    //creating soome fishes
+    addFish() {
+        let speedVariance =  Phaser.Math.Between(0, 50);
+        let fish = new Fish(this, this.fishSpeed - speedVariance).setRandomPosition(680, 0 ,0, 400);
+        this.fishGroup.add(fish);
+    }
+    //adding trash...
+    addTrash() {
+        let speedVariance =  Phaser.Math.Between(0, 50);
+        let trash = new Trash(this, this.trashSpeed - speedVariance).setRandomPosition(680, 0 ,0, 400);
+        this.trashGroup.add(trash);
     }
 
     update() {
         //here we go...
         //check key input for restart
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
-            this.scene.restart();
-        }
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            this.scene.start("menuScene");
-        }
+       
+
+
         //moving background
         this.backdrop.tilePositionX += 0.5;
 
 
         if (!this.gameOver){
-            //game over if player hits too many thinks
-            /*if(skndjn){
-                this.music.pause();
-                this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', menuConfig).setOrigin(0.5);
-                this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or <- for Menu', menuConfig).setOrigin(0.5);
-                this.gameOver = true;
-            }*/
-        
-        
+            
+                
+            
             //character
             this.character.update();
 
             // check for collisions
             this.physics.world.collide(this.character, this.jellyGroup, this.characterCollision, null, this);
             this.physics.world.collide(this.character, this.rockGroup, this.characterCollision, null, this);
+            this.physics.world.collide(this.character, this.fishGroup, this.fishCollision, null, this);
+            this.physics.world.collide(this.character, this.trashGroup, this.trashCollision, null, this);
             
         }
     }
 
 
-    hintAdvice() {
-    
-       //need array of different phrases to cycle through
-       this.hints = ["Don't hit the jelly fish!", "Collect fish for points!", "Don't get caught up in the trash!", "Avoid boats!", "Don't bump into the rocks!"];
-       
-        menuConfig.fontSize = 20;
-        //text
-        this.hintText = this.add.text(game.config.width/2, game.config.height/5 - borderUISize - borderPadding, "Use the up and down arrows to move.", menuConfig).setOrigin(0.5);
-        //need array of different phrases to cycle through
-        
-        this.clock = this.time.delayedCall(5000, () => {
-            this.index = Math.round(Math.random() * this.hints.length); 
-            console.log(this.index); 
-            this.displayHint = this.hints[this.index];
-            this.hintText.setText(this.displayHint); 
-            
-        }, null, this);
-        
-        
-    }
 
+    //collison that causes harm
     characterCollision(){
         this.cameras.main.shake(500, 0.0025);
-        this.character.reset();
+        this.music.pause();
+        this.scene.start('menuScene');
     }
+    //collision with fish(eating them)
+    fishCollision(){
+        this.fishGroup.clear(true, true);
+        this.addFish();
+        this.score += 1;
+        this.scoreRight.text = this.score;
+    }
+    //collision for trash(cause it also disappears like fish, because it is SADLY being eaten as well)
+    trashCollision(){
+        this.trashGroup.clear(true, true);
+        this.addTrash();
+        if(this.score > 0){
+            this.score -= 1;
+            this.scoreRight.text = this.score;
+        }
+    }
+
+    //Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. (5)
     levelBump() {
         // increment level (ie, score)
         level++;
 
         // bump speed every 5 levels (until max is hit)
         if(level % 5 == 0) {
-            //console.log(`level: ${level}, speed: ${this.barrierSpeed}`);
             //this.sound.play('clang', { volume: 0.5 });         // play clang to signal speed up
             if(this.rockSpeed >= this.rockSpeedMax) {     // increase barrier speed
                 this.rockSpeed -= 10;
 
             }
-            if(this.jellySpeed >= this.jellySpeedMax) {     // increase barrier speed
+            if(this.jellySpeed >= this.jellySpeedMax) {     // increase jelly speed
                 this.jellySpeed -= 10;
+
+            }
+            if(this.fishSpeed >= this.fishSpeedMax) {     // increase fish speed
+                this.fishSpeed -= 5;
+
+            }
+            if(this.trashSpeed >= this.trashSpeedMax) {     // increase trash speed
+                this.trashSpeed -= 5;
 
             }
         }  
