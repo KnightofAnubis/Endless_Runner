@@ -16,11 +16,11 @@
 //Be playable for at least 15 seconds for a new player of low to moderate skill (5)
 //Include in-game credits for all roles, assets, music, etc. (5)
 //Properly transition between Scenes and allow the player to restart w/out having to reload the page (5)
-
+//Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (5)
 
 //to do:
 //Use a minimum of three sound effects for key mechanics, UI, and/or significant events appropriate to your game design (5)
-//Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (5)
+
 //Run without significant crashes or errors (5)
 
 
@@ -66,3 +66,6 @@ let borderPadding = borderUISize / 3;
 
 let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR, keyM;
 let level;
+let highScore;
+let newHighScore = false;
+let score;

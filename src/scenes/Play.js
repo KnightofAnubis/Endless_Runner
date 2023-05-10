@@ -33,38 +33,20 @@ class Play extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 640, 480);
         //creating some stuff
         this.backdrop = this.add.tileSprite(0, 0,640, 480, 'backdrop').setOrigin(0,0);
-       
-        //need array of different phrases to cycle through
-        this.hints = ["Don't hit the jelly fish!", "Collect fish for points!", "Don't get caught up in the trash!", "Don't bump into the rocks!"];
-        menuConfig.fontSize = 20;
-        //text
-        this.hintText = this.add.text(game.config.width/2, game.config.height/5 - borderUISize - borderPadding, "Use the up and down arrows to move.", menuConfig).setOrigin(0.5);
-        //need array of different phrases to cycle through
-        
-        this.time.delayedCall(5000, () => {
-            this.displayHint = this.hints[0];
-            this.hintText.setText(this.displayHint); 
-        });
-        this.time.delayedCall(35000, () => { 
-            this.displayHint = this.hints[1];
-            this.hintText.setText(this.displayHint); 
-        });
-        this.time.delayedCall(55000, () => {
-            this.displayHint = this.hints[2];
-            this.hintText.setText(this.displayHint); 
-        });
-        this.time.delayedCall(70000, () => {
-            this.displayHint = this.hints[3];
-            this.hintText.setText(this.displayHint); 
-        });
-      
-           
-        
+        //load animations
+        this.addAnimation();
 
+        //add character
+        this.character = new Character(this, game.config.width/4, game.config.height/2, this.selectedCharacter).setOrigin(0.5, 0);
+        this.character.body.setSize(60,25);
+        this.character.body.setOffset(5,-11);
+        this.character.body.setImmovable();
+        this.character.body.setCollideWorldBounds(true);
 
-       this.jellyGroup = this.add.group({
+        //jelly group
+        this.jellyGroup = this.add.group({
             runChildUpdate: true
-       });
+        });
          // wait a few seconds before spawning jelly (same as rocks)
         this.time.delayedCall(2500, () => { 
             this.addJelly(); 
@@ -86,15 +68,7 @@ class Play extends Phaser.Scene {
             this.addTrash();
         });
         
-        this.addAnimation();
-
-        //add character
-        this.character = new Character(this, game.config.width/4, game.config.height/2, this.selectedCharacter).setOrigin(0.5, 0);
-        this.character.body.setSize(60,30);
-        this.character.body.setOffset(5,-11);
-        this.character.body.setImmovable();
-        this.character.body.setCollideWorldBounds(true);
-        
+    
          // set up rock group
         this.rockGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
@@ -133,10 +107,32 @@ class Play extends Phaser.Scene {
         }
     
         //new initialize score
-        this.score = 0;
-        this.scoreRight = this.add.text(game.config.width/9, game.config.height/5 - borderUISize - borderPadding, this.score, scoreConfig).setOrigin(0.5);
+        score = 0;
+        this.scoreRight = this.add.text(game.config.width/9, game.config.height/5 - borderUISize - borderPadding, score, scoreConfig).setOrigin(0.5);
 
+        //need array of different phrases to cycle through
+        this.hints = ["Collect fish for points!", "Don't hit the jelly fish!", "Don't get caught up in the trash!", "Don't bump into the rocks!"];
+        menuConfig.fontSize = 20;
+        menuConfig.color = "black";
+        //text
+        this.hintText = this.add.text(game.config.width/2, game.config.height/5 - borderUISize - borderPadding, "Use the up and down arrows to move.", menuConfig).setOrigin(0.5);
         
+        this.time.delayedCall(5000, () => {
+            this.displayHint = this.hints[0];
+            this.hintText.setText(this.displayHint); 
+        });
+        this.time.delayedCall(35000, () => { 
+            this.displayHint = this.hints[1];
+            this.hintText.setText(this.displayHint); 
+        });
+        this.time.delayedCall(55000, () => {
+            this.displayHint = this.hints[2];
+            this.hintText.setText(this.displayHint); 
+        });
+        this.time.delayedCall(70000, () => {
+            this.displayHint = this.hints[3];
+            this.hintText.setText(this.displayHint); 
+        });
         
         
         //Background music
@@ -261,8 +257,8 @@ class Play extends Phaser.Scene {
     fishCollision(){
         this.fishGroup.clear(true, true);
         this.addFish();
-        this.score += 1;
-        this.scoreRight.text = this.score;
+        score += 1;
+        this.scoreRight.text = score;
     }
     //collision for trash(cause it also disappears like fish, because it is SADLY being eaten as well)
     trashCollision(){

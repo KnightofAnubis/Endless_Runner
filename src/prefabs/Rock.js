@@ -10,7 +10,7 @@ class Rock extends Phaser.Physics.Arcade.Sprite {
         this.parentScene.physics.add.existing(this);    // add to physics system
         this.setVelocityX(velocity + 400);            // make it go!
         this.setImmovable();
-        this.setSize(15, 55);
+        this.setSize(15, 50);
         this.setDisplaySize(70, 110);                    
         this.newRock = true;                 // custom property to control barrier spawning
     }
