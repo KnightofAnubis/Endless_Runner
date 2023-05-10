@@ -35,7 +35,7 @@ class Play extends Phaser.Scene {
         this.backdrop = this.add.tileSprite(0, 0,640, 480, 'backdrop').setOrigin(0,0);
        
         //need array of different phrases to cycle through
-        this.hints = ["Don't hit the jelly fish!", "Collect fish for points!", "Don't get caught up in the trash!", "Avoid boats!", "Don't bump into the rocks!"];
+        this.hints = ["Don't hit the jelly fish!", "Collect fish for points!", "Don't get caught up in the trash!", "Don't bump into the rocks!"];
         menuConfig.fontSize = 20;
         //text
         this.hintText = this.add.text(game.config.width/2, game.config.height/5 - borderUISize - borderPadding, "Use the up and down arrows to move.", menuConfig).setOrigin(0.5);
@@ -57,15 +57,9 @@ class Play extends Phaser.Scene {
             this.displayHint = this.hints[3];
             this.hintText.setText(this.displayHint); 
         });
-        this.time.delayedCall(105000, () => {
-            this.displayHint = this.hints[4];
-            this.hintText.setText(this.displayHint); 
-        });
+      
            
-        //animation
-       
-        this.anims.createFromAseprite(this.selectedCharacter);
-        this.anims.createFromAseprite('jellyfish');
+        
 
 
        this.jellyGroup = this.add.group({
@@ -92,6 +86,8 @@ class Play extends Phaser.Scene {
             this.addTrash();
         });
         
+        this.addAnimation();
+
         //add character
         this.character = new Character(this, game.config.width/4, game.config.height/2, this.selectedCharacter).setOrigin(0.5, 0);
         this.character.body.setSize(60,30);
@@ -182,8 +178,15 @@ class Play extends Phaser.Scene {
         
         //end condition
         this.collided = false;
+        this.gameOver = false;
         
-        
+    }
+    addAnimation(){
+        //animation
+        this.anims.remove('Swim');
+        this.anims.remove('move');
+        this.anims.createFromAseprite(this.selectedCharacter);
+        this.anims.createFromAseprite('jellyfish');
     }
     // create new rock and add them to existing barrier group
     addRock() {
@@ -213,7 +216,12 @@ class Play extends Phaser.Scene {
     update() {
         //here we go...
         //check key input for restart
-       
+        if(this.gameOver){
+            this.time.delayedCall(4500, () => {
+                this.scene.start("gameOverScene");
+            });
+            
+        }
 
 
         //moving background
@@ -221,8 +229,14 @@ class Play extends Phaser.Scene {
 
 
         if (!this.gameOver){
-            
-                
+            //game over if player hits too many thinks
+            if(this.collided == true){
+                this.music.pause();
+                this.difficultyTimer.destroy(); 
+                this.character.destroy();
+                this.gameOver = true;
+            }
+        
             
             //character
             this.character.update();
@@ -241,8 +255,7 @@ class Play extends Phaser.Scene {
     //collison that causes harm
     characterCollision(){
         this.cameras.main.shake(500, 0.0025);
-        this.music.pause();
-        this.scene.start('menuScene');
+        this.collided = true;
     }
     //collision with fish(eating them)
     fishCollision(){
