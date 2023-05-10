@@ -38,7 +38,6 @@ class Character extends Phaser.GameObjects.Sprite {
 
     reset() {
         //what happens when the player dies
-        this.swim.destroy();
         
     }
 }

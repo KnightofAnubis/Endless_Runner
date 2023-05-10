@@ -1,6 +1,6 @@
 //Kelsey Melott <kmelott.ucsc.edu>
 // Endless Runner Name: 
-//Time it took in hrs:
+//Time it took in hrs: 17rn
 
 //Check list:
 //complete:
@@ -42,7 +42,7 @@ let config = {
         }
     },
 
-    scene: [Load, Menu, Selection, Play, GameOver]
+    scene: [Load, Menu,  Selection, Darkmode, Play, GameOver]
    
 }
 //menu config

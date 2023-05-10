@@ -43,7 +43,12 @@ class GameOver extends Phaser.Scene {
      update() {
          //gettin' ready to play!
          if(Phaser.Input.Keyboard.JustDown(keyR)) {
-             this.scene.start('playScene');
+            if(game.settings.mode){
+                this.scene.start('playScene');
+            }
+            if(!game.settings.mode){
+                this.scene.start('darkmodeScene');
+            }
          }
          if (Phaser.Input.Keyboard.JustDown(keyM)) {
              this.scene.start('menuScene');

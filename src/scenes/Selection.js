@@ -49,6 +49,11 @@ class Selection extends Phaser.Scene {
     }
 
     handleContinue() {
-        this.scene.start('playScene', {character: this.selectedKey});
+        if(game.settings.mode){
+            this.scene.start('playScene', {character: this.selectedKey});
+        }
+        if(!game.settings.mode){
+            this.scene.start('darkmodeScene', {character: this.selectedKey});
+        }
     }
 }
