@@ -1,6 +1,6 @@
 //Kelsey Melott <kmelott.ucsc.edu>
 // Endless Runner Name: 
-//Time it took in hrs: 24rn
+//Time it took in hrs: 25rn
 
 //Check list:
 //complete:

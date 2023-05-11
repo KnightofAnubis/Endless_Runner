@@ -331,8 +331,10 @@ class Darkmode extends Phaser.Scene
         this.sound.play('oof', { volume: 0.5 });
         this.cameras.main.shake(500, 0.0025);
         this.character.reset();
-        this.character.body.x = game.config.width/4;
-        this.character.body.y = game.config.height/2;
+        this.character.body.x = game.config.width/5;
+        this.character.body.y = game.config.height/2.1;
+        this.light.x =  game.config.width/4;
+        this.light.y =  game.config.height/2;
         var currentLifeCount = this.lifeCount,
             currentLife = this.lives[currentLifeCount - 1];
             
