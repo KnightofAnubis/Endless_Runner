@@ -1,6 +1,6 @@
 //Kelsey Melott <kmelott.ucsc.edu>
 // Endless Runner Name: 
-//Time it took in hrs: 17rn
+//Time it took in hrs: 24rn
 
 //Check list:
 //complete:
@@ -17,15 +17,11 @@
 //Include in-game credits for all roles, assets, music, etc. (5)
 //Properly transition between Scenes and allow the player to restart w/out having to reload the page (5)
 //Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (5)
-
-//to do:
 //Use a minimum of three sound effects for key mechanics, UI, and/or significant events appropriate to your game design (5)
-
 //Run without significant crashes or errors (5)
 
-
 //Creative tilt: 
-//
+// 
 //
 
 'use strict';
@@ -47,7 +43,7 @@ let config = {
 }
 //menu config
 let menuConfig = {
-    fontFamily: "Courier",
+    fontFamily: "Georgia",
     fontSize: '28px',
     //backgroundColor: '#008080',
     color: '#008080',

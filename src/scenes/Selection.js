@@ -9,7 +9,7 @@ class Selection extends Phaser.Scene {
     create() {
         //selection
         let menuConfig = {
-            fontFamily: "Courier",
+            fontFamily: "Georgia",
             fontSize: '28px',
             //backgroundColor: '#008080',
             color: '#008080',
@@ -30,7 +30,7 @@ class Selection extends Phaser.Scene {
         this.manta.setDisplaySize(200,100);
         
         //define some keys
-        this.input.keyboard.once('keydown-SPACE', this.handleContinue, this);
+        
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
  
@@ -40,11 +40,13 @@ class Selection extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.selectedKey = 'shark';
             this.add.text(game.config.width/2, game.config.height - borderUISize - borderPadding, "Press SPACE to continue...", menuConfig).setOrigin(0.5);
+            this.input.keyboard.once('keydown-SPACE', this.handleContinue, this);
         }
         //manta
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
             this.selectedKey = 'manta';
             this.add.text(game.config.width/2, game.config.height - borderUISize - borderPadding, "Press SPACE to continue...", menuConfig).setOrigin(0.5);
+            this.input.keyboard.once('keydown-SPACE', this.handleContinue, this);
         }
     }
 

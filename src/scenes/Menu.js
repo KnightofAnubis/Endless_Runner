@@ -8,7 +8,7 @@ class Menu extends Phaser.Scene {
         //creating stoof
         //menu...
         let menuConfig = {
-            fontFamily: "Courier",
+            fontFamily: "Georgia",
             fontSize: '28px',
             //backgroundColor: '#008080',
             color: '#008080',

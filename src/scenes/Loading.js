@@ -20,28 +20,38 @@ class Load extends Phaser.Scene {
         // load graphics assets
         this.load.aseprite(
             'shark',
-            `shark.png`,
-            `shark.json`
+            `characters/shark.png`,
+            `characters/shark.json`
         )
        this.load.aseprite(
             'manta',
-            `manta.png`,
-            `manta.json`
+            `characters/manta.png`,
+            `characters/manta.json`
         )
-        this.load.image('backdrop', 'background.png');
+        this.load.image('backdrop', 'background/background.png');
+        this.load.image('reef', 'background/reef.png');
+        this.load.image('darkbackdrop', 'background/darkbackground.png');
+        this.load.image('spark', 'sprites/lightning.png');
         this.load.aseprite(
             'jellyfish',
-            'jellyfish.png',
-            'jellyfish.json'
+            'sprites/jellyfish.png',
+            'sprites/jellyfish.json'
         );
-        this.load.image('rock', 'rock.png');
-        this.load.image('trash', 'trash.png');
-        this.load.image('fish', 'fish.png');
+        this.load.image('rock', 'sprites/rock.png');
+        this.load.image('trash', 'sprites/trash.png');
+        this.load.image('fish', 'sprites/fish.png');
+        this.load.image('blueFish', 'sprites/blueFish.png');
+        this.load.image('yellowFish', 'sprites/yellowFish.png');
 
         
         
         // load audio assets
-        this.load.audio('background_music', 'ocean.wav');
+        this.load.audio('background_music', 'sound/ocean.wav');
+        this.load.audio('yum', 'sound/yum.wav');
+        this.load.audio('blah', 'sound/blah.wav');
+        this.load.audio('woomp','sound/woomp.wav');
+        this.load.audio('buzz', 'sound/buzz.wav');
+        this.load.audio('oof', 'sound/oof.wav');
         
     }
 

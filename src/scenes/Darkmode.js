@@ -24,11 +24,11 @@ class Darkmode extends Phaser.Scene
         this.lights.enable().setAmbientColor(0x333333);
 
         //  Add an image and set it to use Lights2D
-        this.backdrop = this.add.tileSprite(0, 0,640, 480, 'backdrop').setOrigin(0,0);
+        this.backdrop = this.add.tileSprite(0, 0,640, 480, 'darkbackdrop').setOrigin(0,0);
         this.backdrop.setPipeline('Light2D');
 
         //  Our spotlight. 100px radius and white in color.
-        this.light = this.lights.addLight(game.config.width/4, game.config.height/2, 80).setColor(0xffffff).setIntensity(2);
+        this.light = this.lights.addLight(game.config.width/4, game.config.height/2, 100).setColor(0xffffff).setIntensity(2);
 
 
 
@@ -185,7 +185,20 @@ class Darkmode extends Phaser.Scene
                 });
             });
         }
-        
+         //three lives
+         this.lives = [];
+         this.lifeOutlines = [];
+         this.maxlife = 3;
+         this.lifeCount = this.maxlife;
+         var life01line = this.add.sprite(game.config.width/9 * (0/2) , game.config.height/3.8 - borderUISize - borderPadding, this.selectedCharacter).setOrigin(-0.5).setScale(0.5).setTint(0x333333),
+             life02line = this.add.sprite(game.config.width/9 * (1/2) , game.config.height/3.8 - borderUISize - borderPadding, this.selectedCharacter).setOrigin(-0.5).setScale(0.5).setTint(0x333333),
+             life03line = this.add.sprite(game.config.width/9 * (2/2) , game.config.height/3.8 - borderUISize - borderPadding, this.selectedCharacter).setOrigin(-0.5).setScale(0.5).setTint(0x333333);
+         this.lifeOutlines = [life01line, life02line, life03line];
+ 
+         var life01 = this.add.sprite(game.config.width/9 * (0/2) , game.config.height/3.8 - borderUISize - borderPadding, this.selectedCharacter).setOrigin(-0.5).setScale(0.5),
+             life02 = this.add.sprite(game.config.width/9 * (1/2) , game.config.height/3.8 - borderUISize - borderPadding, this.selectedCharacter).setOrigin(-0.5).setScale(0.5),
+             life03 = this.add.sprite(game.config.width/9 * (2/2) , game.config.height/3.8 - borderUISize - borderPadding, this.selectedCharacter).setOrigin(-0.5).setScale(0.5);
+         this.lives = [life01, life02, life03];
         
         //end condition
         this.collided = false;
@@ -209,19 +222,25 @@ class Darkmode extends Phaser.Scene
     // create new jelly and add them to existing jelly group: I really like this method!
     addJelly() {
         let speedVariance =  Phaser.Math.Between(0, 50);
-        let jelly = new Jellyfish(this, this.jellySpeed - speedVariance).setRandomPosition(680, 0 ,0, 400).setPipeline('Light2D');;
+        let jelly = new Jellyfish(this, this.jellySpeed - speedVariance).setRandomPosition(680, 100 ,0, 300).setPipeline('Light2D');
         this.jellyGroup.add(jelly);
     }
     //creating soome fishes
     addFish() {
         let speedVariance =  Phaser.Math.Between(0, 50);
-        let fish = new Fish(this, this.fishSpeed - speedVariance).setRandomPosition(680, 0 ,0, 400).setPipeline('Light2D');;
+        let select = ['fish', 'blueFish', 'yellowFish'];
+        let fishSelect = Math.round(Math.random() * select.length);
+        var chosenFish = select[fishSelect];
+        if (!chosenFish) {
+            chosenFish = "fish";
+        }
+        let fish = new Fish(this, this.fishSpeed - speedVariance, chosenFish).setRandomPosition(680, 100 ,0, 380).setPipeline('Light2D');
         this.fishGroup.add(fish);
     }
     //adding trash...
     addTrash() {
         let speedVariance =  Phaser.Math.Between(0, 50);
-        let trash = new Trash(this, this.trashSpeed - speedVariance).setRandomPosition(680, 0 ,0, 400).setPipeline('Light2D');;
+        let trash = new Trash(this, this.trashSpeed - speedVariance).setRandomPosition(680, 100 ,0, 300).setPipeline('Light2D');
         this.trashGroup.add(trash);
     }
 
@@ -229,7 +248,7 @@ class Darkmode extends Phaser.Scene
         //here we go...
         //check key input for restart
         if(this.gameOver){
-            this.time.delayedCall(4500, () => {
+            this.time.delayedCall(1000, () => {
                 this.scene.start("gameOverScene");
             });
             
@@ -262,8 +281,8 @@ class Darkmode extends Phaser.Scene
             this.character.update();
 
             // check for collisions
-            this.physics.world.collide(this.character, this.jellyGroup, this.characterCollision, null, this);
-            this.physics.world.collide(this.character, this.rockGroup, this.characterCollision, null, this);
+            this.physics.world.collide(this.character, this.jellyGroup, this.jellyCollision, null, this);
+            this.physics.world.collide(this.character, this.rockGroup, this.rockCollision, null, this);
             this.physics.world.collide(this.character, this.fishGroup, this.fishCollision, null, this);
             this.physics.world.collide(this.character, this.trashGroup, this.trashCollision, null, this);
             
@@ -273,24 +292,80 @@ class Darkmode extends Phaser.Scene
 
 
     //collison that causes harm
-    characterCollision(){
+    jellyCollision(){
+        this.sound.play('buzz', { volume: 0.2 });
         this.cameras.main.shake(500, 0.0025);
-        this.collided = true;
+        this.particles = this.add.particles(this.character.x, this.character.y, 'spark');
+        
+        this.add.particles(this.character.x, this.character.y, 'spark', {
+            scale: 0.5,
+            speed: 70,
+            lifespan: 500,
+            gravityY: 10,
+            frequency: 50,
+            duration: 500,
+        });
+        this.jellyGroup.remove(this.jellyGroup.getFirst(true), true);
+        var currentLifeCount = this.lifeCount,
+            currentLife = this.lives[currentLifeCount - 1];
+            
+        let lifeFade = this.tweens.add({
+            targets: currentLife,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        });    
+        lifeFade.play();
+        
+        //console.log(this.lifeCount);
+        this.lifeCount -= 1;
+        if (this.lifeCount <= 0) {
+            this.collided = true;
+        }
+        
+    }
+    //collision with rocks
+    rockCollision(){
+        this.sound.play('oof', { volume: 0.5 });
+        this.cameras.main.shake(500, 0.0025);
+        this.character.reset();
+        this.character.body.x = game.config.width/4;
+        this.character.body.y = game.config.height/2;
+        var currentLifeCount = this.lifeCount,
+            currentLife = this.lives[currentLifeCount - 1];
+            
+        let lifeFade = this.tweens.add({
+            targets: currentLife,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        });    
+        lifeFade.play();
+        
+        //console.log(this.lifeCount);
+        this.lifeCount -= 1;
+        if (this.lifeCount <= 0) {
+            this.collided = true;
+        }
     }
     //collision with fish(eating them)
     fishCollision(){
-        this.fishGroup.clear(true, true);
-        this.addFish();
+        this.sound.play('yum', { volume: 0.7 });
+        this.fishGroup.remove(this.fishGroup.getFirst(true), true);
         score += 1;
         this.scoreRight.text = score;
     }
     //collision for trash(cause it also disappears like fish, because it is SADLY being eaten as well)
     trashCollision(){
-        this.trashGroup.clear(true, true);
-        this.addTrash();
-        if(this.score > 0){
-            this.score -= 1;
-            this.scoreRight.text = this.score;
+        this.sound.play('blah', { volume: 0.7 });
+        this.trashGroup.remove(this.trashGroup.getFirst(true), true);
+        if(score > 0){
+            score -= 1;
+            this.scoreRight.text = score;
         }
     }
 

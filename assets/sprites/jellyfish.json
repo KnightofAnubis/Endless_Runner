@@ -16,7 +16,7 @@
     "duration": 100
    },
    "2": {
-    "frame": { "x": 66, "y": 2, "w": 29, "h": 49 },
+    "frame": { "x": 2, "y": 58, "w": 29, "h": 49 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 3, "y": 4, "w": 27, "h": 47 },
@@ -24,7 +24,7 @@
     "duration": 100
    },
    "3": {
-    "frame": { "x": 2, "y": 105, "w": 28, "h": 39 },
+    "frame": { "x": 65, "y": 105, "w": 28, "h": 39 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 3, "y": 6, "w": 26, "h": 37 },
@@ -32,7 +32,7 @@
     "duration": 100
    },
    "4": {
-    "frame": { "x": 2, "y": 105, "w": 28, "h": 39 },
+    "frame": { "x": 2, "y": 110, "w": 28, "h": 39 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 3, "y": 6, "w": 26, "h": 37 },
@@ -40,7 +40,7 @@
     "duration": 100
    },
    "5": {
-    "frame": { "x": 2, "y": 65, "w": 33, "h": 37 },
+    "frame": { "x": 65, "y": 65, "w": 33, "h": 37 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 4, "w": 31, "h": 35 },
@@ -48,15 +48,15 @@
     "duration": 100
    },
    "6": {
-    "frame": { "x": 66, "y": 54, "w": 28, "h": 49 },
+    "frame": { "x": 34, "y": 65, "w": 28, "h": 50 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 2, "y": 3, "w": 26, "h": 47 },
+    "spriteSourceSize": { "x": 2, "y": 2, "w": 26, "h": 48 },
     "sourceSize": { "w": 32, "h": 64 },
     "duration": 100
    },
    "7": {
-    "frame": { "x": 36, "y": 2, "w": 27, "h": 60 },
+    "frame": { "x": 66, "y": 2, "w": 27, "h": 60 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 3, "y": 1, "w": 25, "h": 58 },
@@ -69,7 +69,7 @@
   "version": "1.2.40-x64",
   "image": "jellyfish.png",
   "format": "RGBA8888",
-  "size": { "w": 96, "h": 145 },
+  "size": { "w": 99, "h": 150 },
   "scale": "1",
   "frameTags": [
    { "name": "move", "from": 0, "to": 7, "direction": "forward" }

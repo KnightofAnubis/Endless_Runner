@@ -10,6 +10,7 @@ class Trash extends Phaser.Physics.Arcade.Sprite {
         this.parentScene.physics.add.existing(this);    // add to physics system
         this.setVelocityX(velocity + 400);            // make it go!
         this.setImmovable(); 
+        
         this.body.setSize(5,15);
         this.setDisplaySize(45,45);                  
         this.newTrash = true;                 // custom property to control barrier spawning
@@ -17,7 +18,7 @@ class Trash extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         // add new barrier when existing barrier hits center X
-        if(this.newTrash && this.x < game.config.width/4) {
+        if(this.newTrash && this.x < game.config.width/2) {
             // (recursively) call parent scene method from this context
             this.parentScene.addTrash(this.parent, this.velocity);
             this.newTrash = false;

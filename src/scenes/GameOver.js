@@ -30,7 +30,7 @@ class GameOver extends Phaser.Scene {
         this.add.text(game.config.width/4, game.config.height/3.8 - borderUISize - borderPadding, `This browser's best: ${highScore} fish`, menuConfig);
         this.add.text(game.config.width/4, game.config.height/3 - borderUISize - borderPadding, "Music made through MuseScore 3", menuConfig);
         this.add.text(game.config.width/4, game.config.height/2.5 - borderUISize - borderPadding, "Sound Effects made through Audacity", menuConfig);
-        this.add.text(game.config.width/4, game.config.height/2.2 - borderUISize - borderPadding, "Assets made through Aserpite", menuConfig);
+        this.add.text(game.config.width/4, game.config.height/2.2 - borderUISize - borderPadding, "Assets made through Aseprite", menuConfig);
         this.add.text(game.config.width/4, game.config.height/1.9 - borderUISize - borderPadding, "All made by Kelsey Melott", menuConfig);
         this.add.text(game.config.width/4, game.config.height/1.5 - borderUISize - borderPadding, "Press (R) to restart.", menuConfig);
         this.add.text(game.config.width/4, game.config.height/1.4 - borderUISize - borderPadding, "Press (M) for Menu Screen.", menuConfig);

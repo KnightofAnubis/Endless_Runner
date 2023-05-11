@@ -1,7 +1,7 @@
 class Fish extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, velocity) {
+    constructor(scene, velocity, fish) {
         // call Phaser Physics Sprite constructor
-        super(scene, game.config.width, game.config.height/2, 'fish'); 
+        super(scene, game.config.width, game.config.height/2, fish); 
         
         this.parentScene = scene;               // maintain scene context
 
@@ -18,7 +18,7 @@ class Fish extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         // add new barrier when existing barrier hits center X
-        if(this.newFish && this.x < game.config.width/4) {
+        if(this.newFish && this.x < game.config.width/2) {
             // (recursively) call parent scene method from this context
             this.parentScene.addFish(this.parent, this.velocity);
             this.newFish = false;
