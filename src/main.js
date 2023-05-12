@@ -1,6 +1,6 @@
 //Kelsey Melott <kmelott.ucsc.edu>
-// Endless Runner Name: 
-//Time it took in hrs: 25rn
+//Endless Swimmer
+//Time it took in hrs: 27
 
 //Check list:
 //Use multiple Scene classes (dictated by your game's style) (5) 
@@ -22,7 +22,7 @@
 //Arcade Physics
 
 //Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. (5)
-//used the level bump from Paddle Parkcore to increase speed of enemies and fish
+//used the level bump from Paddle Parkour to increase speed of enemies and fish
 
 //Be theoretically endless (5)
 //it continues till death
@@ -40,7 +40,7 @@
 //Player can restart game mode they had chosen or return to menu screne
 
 //Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (5)
-// eating fish improves score, hi score is listed on Game Over screen: this idea was also taken from Paddle Parkcore
+// eating fish improves score, hi score is listed on Game Over screen: this idea was also taken from Paddle Parkour
 
 //Use a minimum of three sound effects for key mechanics, UI, and/or significant events appropriate to your game design (5)
 //four sound effects for collision and 'level bump'

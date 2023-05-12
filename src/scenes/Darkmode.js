@@ -378,7 +378,7 @@ class Darkmode extends Phaser.Scene
 
         // bump speed every 5 levels (until max is hit)
         if(level % 5 == 0) {
-            //this.sound.play('clang', { volume: 0.5 });         // play clang to signal speed up
+            this.sound.play('woomp', { volume: 0.6 });         // play clang to signal speed up
             if(this.rockSpeed >= this.rockSpeedMax) {     // increase barrier speed
                 this.rockSpeed -= 10;
 
